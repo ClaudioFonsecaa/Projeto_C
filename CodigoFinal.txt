@@ -1,0 +1,1283 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+
+int coins=0;
+int montante=0;
+int MenuGlobal=0;
+
+
+void recordLotaria(){
+
+	FILE*fich;
+
+	char t;
+
+	fich = fopen("recordLotaria.txt","r");
+	while((t=fgetc(fich))!= EOF)
+		putchar(t);
+	fclose(fich);
+
+	printf("\n\n\t");
+
+	system("pause");
+	return 0;
+}
+
+//inicio subprogramas naval
+
+int getRandomNaval(int min,int max)
+{
+  return (min+rand()%(max-min+1));
+}
+
+
+int iniciarTabNaval(int tab[][10], int QuantosBarcos)
+{
+	int contadorBarcos=0;
+	int x, y;
+	int linha, coluna;
+
+
+	  for(y = 0; y < 3; y++){
+		for(x = 0; x < 3; x++){
+		   tab[x][y] = getRandomNaval(0,1);
+			if(tab[x][y]==1){QuantosBarcos++;}
+		}
+	  }
+
+        printf("\n\n\t0 \t1 \t2\n");
+
+
+	       for(y=0 ; y < 3 ; y++ ){
+            printf("\n%d",y);
+
+            for(x=0 ; x < 3 ; x++ ){
+			if(tab[y][x]==3){
+				printf("\t*");
+                }else if(tab[y][x]==2){
+                    printf("\tX");
+					}else{
+						printf("\t~");
+					}
+            }
+            printf("\n\n");
+        }
+
+
+return QuantosBarcos;
+}
+
+
+
+
+
+int jogarNaval(int tab[][10], int y, int x, int QuantosBarcos)
+{
+
+                int contador=0;
+                if(tab[y][x] == 1){
+							printf("\n\nAcertou num barco!\n\n\n");
+                               tab[y][x] = 2;
+								QuantosBarcos--;
+                               }else if(tab[y][x] == 0){
+									printf("\n\nAcertou na agua...\n\n\n");
+									tab[y][x] = 3;
+									}else{
+										printf("\n\nJa acertou nesta posicao.\n\n\n");
+									}
+
+        printf("\t0 \t1 \t2");
+        printf("\n\n");
+
+        for(y=0 ; y < 3 ; y++ ){
+            printf("%d\n",y);
+
+            for(x=0 ; x < 3 ; x++ ){
+			if(tab[y][x]==3){
+				printf("\t*");
+                }else if(tab[y][x]==2){
+                    printf("\tX");
+					}else{
+						printf("\t~");
+					}
+            }
+            printf("\n");
+        }
+
+    return QuantosBarcos;}
+
+
+
+int NavalJogo(int TentativasJogadasNaval){
+
+	int tab[10][10];
+	int x,y;
+	int QuantosBarcos=0;
+	TentativasJogadasNaval=0;
+
+
+  system("cls");
+  printf("\t  Batalha Naval\n\nNumeros entre 0 e 2\n\n");
+  QuantosBarcos=iniciarTabNaval(tab, QuantosBarcos);
+  while(1)
+  {
+                  denovo:
+
+	printf("\nExistem %d Barcos em jogo\n\n", QuantosBarcos);
+                               printf("Linha: ");
+                               scanf("%d", &y);
+                               printf("Coluna: ");
+                               scanf("%d", &x);
+     if(((y < 0) || (y > 2)) || ((x < 0) || (x > 2)))
+     {
+       printf("Posicao invalida\n");
+	   printf("Refazer Jogada\n");
+                   goto denovo;
+     }
+                system("cls");
+				TentativasJogadasNaval++;
+               QuantosBarcos=jogarNaval(tab, y, x, QuantosBarcos);
+               if(QuantosBarcos==0){
+				   printf("\n\n!!Parabens ganhou ao jogo \"Batalha Naval!!\"\n\n\n");
+				   printf("Em %d Tentativas\n\n", TentativasJogadasNaval);
+				   system("pause");
+				   return TentativasJogadasNaval;}
+  }
+
+  return 0;
+}
+//fim subprogramas naval
+
+//_________________________________________FIM__________________NAVAL______________________________________________________________________________________
+
+
+void GaloJogo(){
+
+		MenuGalo:
+		system("cls");
+		system("color 0a");
+		char Matriz[3][3];
+		char O='O', X='X';
+		int l=0,j,i;
+		int opcao;
+		cabeceira();
+		linha(38);
+	    printf("\n|\t|                                    |\n");
+		printf("|\t|   Bem-Vindo ao Jogo do Galo!!!!    |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t| Escolha uma opcao:                 |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t| 1 - Jogar                          |\n");
+		printf("|\t| 2 - Sair                           |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t|                 ClaudioF & GoncaloS|\n");
+		linha(38);
+		tapete();
+
+		printf("\n\tOpcao: ");
+		MenuGlobal=0;
+		scanf(" %d", &MenuGlobal);
+		switch(MenuGlobal){
+				case 1:goto inicio; break;
+				case 2:goto fim; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto MenuGalo; break;
+		}
+
+
+    inicio:
+    l=0;
+    for(i=0;i<3;i++)
+        for(j=0;j<3;j++)
+            Matriz[i][j]=' ';
+
+    while(l<=9)
+        {
+        system("cls");
+        cabeceira();
+		linha(38);
+	    printf("\n|\t|                                    |\n");
+		printf("|\t|         Jogo do Galo!!!!           |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		puts("");
+        for(i=0;i<3;i++)
+        {
+            printf("|\t|\t     %c \xBA %c \xBA %c               |\n",Matriz[i][0],Matriz[i][1],Matriz[i][2]);
+            if(i<3-1)
+            {
+                printf("|\t|\t    ---\xCE---\xCE----             |\n");
+            }
+        }
+		linha(38);
+		tapete();
+        printf("\n\n\n\n\nINSIRA AS COORDENADAS, ");
+        if(l%2)printf("PLAYER 2 => X\nLINHA: ");
+        else printf("PLAYER 1 => O\nLINHA: ");
+
+        scanf("%d",&i);
+        printf("COLUNA: ");
+        scanf("%d",&j);
+
+        if(Matriz[i-1][j-1]==' ')
+        {
+            if(l%2)Matriz[i-1][j-1]=X;
+            else Matriz[i-1][j-1]=O;
+            l++;
+        }
+
+
+
+        if((Matriz[0][0]==O && Matriz[0][1]==O && Matriz[0][2]==O)||
+           (Matriz[1][0]==O && Matriz[1][1]==O && Matriz[1][2]==O)||
+           (Matriz[2][0]==O && Matriz[2][1]==O && Matriz[2][2]==O)||
+           (Matriz[0][0]==O && Matriz[1][0]==O && Matriz[2][0]==O)||
+           (Matriz[0][1]==O && Matriz[1][1]==O && Matriz[2][1]==O)||
+           (Matriz[0][2]==O && Matriz[1][2]==O && Matriz[2][2]==O)||
+           (Matriz[0][0]==O && Matriz[1][1]==O && Matriz[2][2]==O)||
+           (Matriz[0][2]==O && Matriz[1][1]==O && Matriz[2][0]==O))
+        {
+			printf("\n\a\t\tJogador 1, VOCE VENCEU!!!\n");
+            system("PAUSE");
+        goto MenuGalo;
+
+        }
+        if((Matriz[0][0]==X && Matriz[0][1]==X && Matriz[0][2]==X)||
+           (Matriz[1][0]==X && Matriz[1][1]==X && Matriz[1][2]==X)||
+           (Matriz[2][0]==X && Matriz[2][1]==X && Matriz[2][2]==X)||
+           (Matriz[0][0]==X && Matriz[1][0]==X && Matriz[2][0]==X)||
+           (Matriz[0][1]==X && Matriz[1][1]==X && Matriz[2][1]==X)||
+           (Matriz[0][2]==X && Matriz[1][2]==X && Matriz[2][2]==X)||
+           (Matriz[0][0]==X && Matriz[1][1]==X && Matriz[2][2]==X)||
+           (Matriz[0][2]==X && Matriz[1][1]==X && Matriz[2][0]==X))
+        {
+			printf("\n\a\t\tJogador 2, VOCE VENCEU!!!\n");
+            system("PAUSE");
+        goto MenuGalo;
+        }
+
+        if(l==9)
+        {
+            printf("PARTIDA EMPATADA\n");
+            system("PAUSE");
+        goto MenuGalo;
+        }
+    }
+    fim:
+        system("cls");
+    printf("\n\n\n\t\t\tObrigado por ter jogado!!!! :)\n\n\n\n\t\t\t");
+    system("PAUSE");
+    return 0;
+}
+
+void underscore(num){
+	int contador;
+	printf(" ");
+	for(contador=0; contador<num; contador++){
+		printf("_");
+	}
+}
+
+void linhaLotaria(num){
+	int contador;
+	printf("\t");
+	for(contador=0; contador<num; contador++){
+		printf("*");
+	}
+}
+
+void linha(num){
+	int contador;
+	printf("|\t");
+	for(contador=0; contador<num; contador++){
+		printf("*");
+	}
+}
+
+void tracos(num){
+	int contador;
+	printf(" ");
+	for(contador=0; contador<num; contador++){
+		printf("-");
+	}
+}
+
+void cabeceira(){
+		underscore(36);
+		printf("\n|                                    \\\n");
+		printf("|\\           CCCC            GGGG     \\\n");
+		printf("| \\         C               G          \\\n");
+		printf("|  \\        C         &     G  GG       \\\n");
+		printf("|   \\       C               G   G        \\\n");
+		printf("|    \\       CCCC            GGGG         \\\n");
+		printf("|     \\                                    \\\n");
+		printf("|      \\                                    \\\n");
+		printf("|\t\\                                    \\\n");
+}
+
+void tapete(){
+		printf("\n|\t\\                           _____     \\\n");
+		printf("|        \\      ____               ( ___ )     \\\n");
+		printf("|         \\    (____)    ____        \\  \\       \\\n");
+        printf("|          \\            (____)        \\  \\       \\\n");
+        printf("|           \\                          \\  \\       \\\n");
+        printf("|            \\                          ----       \\\n");
+        printf("|             \\                                     \\\n|\t      ");
+        tracos(38);
+        printf("\n|\t       |\t\t\t\t     |");
+        printf("\n|\t       |\t\t\t\t     |");
+        printf("\n|\t       |\t\t\t _________   |");
+        printf("\n|\t       |\t\t\t|  _   _  |  |");
+        printf("\n|\t       |\t\t\t| |_| | | |  |");
+        printf("\n|\t       |\t\t\t|     | | |  |");
+        printf("\n|\t       |\t\t\t|     |_| |  |");
+        printf("\n|\t       |\t\t\t|_________|  |");
+        printf("\n|\t       |\t\t\t\t     |");
+        printf("\n|\t       |\t\t\t\t     |");
+		printf("\n \\\t       |\t\t\t\t     |");
+		printf("\n  \\\t       |\t\t\t\t     |");
+		printf("\n   \\           |\t\t\t\t     |");
+		printf("\n    \\          |     ---_¶___________________._     |\n");
+		printf("     \\         |     ---/________\___/__________|]D   |\n");
+		printf("      \\        |     --/__==O_________________/\t     |\n");
+		printf("       \\       |     ---),---.(_\(_)  /\t\t     |\n");
+		printf("        \\      |     --//_¤_),------ \t\t     |\n");
+		printf("         \\     |     -//_¤_// \t\t\t     |\n");
+		printf("          \\    |     //_¤_//. \t\t\t     |\n");
+		printf("           \\   |\t\t\t\t     |");
+		printf("\n            \\  |\t\t\t\t     |");
+		printf("\n             \\ |\t\t\t\t     |");
+		printf("\n              \\|");
+		underscore(36);
+		printf("|");
+
+
+}
+
+void MenuCoins(){
+
+	printf("\n|\t|\t       Coins:%d\t             |\n", coins);
+
+}
+
+//Inicio Subprogramas da Lotaria______________________________________________________________________________________________________________________________________________________
+
+void loading(){
+	int Loading;
+	for(Loading=150; Loading>0; Loading--){
+			printf("\n\tLoading .\n\t");
+			system("cls");
+			printf("\n\tLoading ..\n\t");
+			system("cls");
+			printf("\n\tLoading ...\n\t");
+			system("cls");
+	}
+}
+int VerificadorDePremios(Numeros, Estrelas){
+
+		if(Numeros==5 && Estrelas==2){
+			return 1;
+		}else if(Numeros==5 && Estrelas==1){
+			return 2;
+		}else if(Numeros==5 && Estrelas==0){
+			return 3;
+		}else if(Numeros==4 && Estrelas==2){
+			return 4;
+		}else if(Numeros==4 && Estrelas==1){
+			return 5;
+		}else if(Numeros==4 && Estrelas==0){
+			return 6;
+		}else if(Numeros==3 && Estrelas==2){
+			return 7;
+		}else if(Numeros==2 && Estrelas==2){
+			return 8;
+		}else if(Numeros==3 && Estrelas==1){
+			return 9;
+		}else if(Numeros==3 && Estrelas==0){
+			return 10;
+		}else if(Numeros==1 && Estrelas==2){
+			return 11;
+		}else if(Numeros==2 && Estrelas==1){
+			return 12;
+		}else if(Numeros==2 && Estrelas==0){
+			return 13;
+		}else{
+			return 14;
+		}
+}
+int pedenumero(Numero1, Numero2, Numero3, Numero4, Numero5){
+	int num=0;
+	pedenumrep:
+	printf("\n\tIntroduza um numero: ");
+	scanf("%d", &num);
+	if(num<=50 && num>=1){
+
+	if(num==Numero1 || num==Numero2 || num==Numero3 || num==Numero4 || num==Numero5){
+		printf("\n\tIntroduzi-o o mesmo numero, tente novamente\n");
+		pedenumero(Numero1, Numero2, Numero3, Numero4, Numero5);
+		num=0;
+	}else{
+		return num;
+	}
+}else{printf("\n\tEste numero nao esta entre 1 e 50, tente novamente.");goto pedenumrep;}}
+
+int pedeestrela(Estrela1, Estrela2){
+	//system("cls");
+	int Estrela=0;
+	pedeestrelarep:
+	printf("\n\tIntroduza uma estrela: ");
+	scanf("%d", &Estrela);
+	if(Estrela<=11 && Estrela>=1){
+
+		if(Estrela==Estrela1 || Estrela==Estrela2){
+		printf("\n\tIntroduzi-o a mesma estrela, tente novamente\n\t");
+		 pedeestrela(Estrela1, Estrela2);
+		 Estrela=0;
+	}else{
+	return Estrela;
+	}
+}else{printf("\n\tEste numero nao esta entre 1 e 11, tente novamente.");goto pedeestrelarep;}}
+int pedenumAleat(Numero1, Numero2, Numero3, Numero4, Numero5){
+	int aleatorio=0;
+	aleatorio=rand() % 49+1;
+
+	if(aleatorio==Numero1 || aleatorio==Numero2 || aleatorio==Numero3 || aleatorio==Numero4 || aleatorio==Numero5){
+		pedenumAleat(Numero1, Numero2, Numero3, Numero4, Numero5);
+	}else{
+	return aleatorio;
+	}
+}
+
+int pedeestAleat(Numero1, Numero2){
+	int aleatorio=0;
+	aleatorio=rand() % 10+1;
+	if(aleatorio==Numero1 || aleatorio==Numero2 ){
+		pedeestAleat(Numero1, Numero2);
+	}else{
+	return aleatorio;
+	}
+}
+
+int FuncaoTesteDeNumeros(Valor, comp1, comp2, comp3, comp4, comp5){
+	int NumeroCerto=0;
+	if(Valor==comp1 || Valor==comp2 || Valor==comp3 || Valor==comp4 || Valor==comp5){
+	NumeroCerto++;
+	return NumeroCerto;
+	}else{
+	return NumeroCerto;
+	}
+}
+int FuncaoTesteDeEstrelas(Estrela, comp1, comp2){
+	int EstrelasCertas=0;
+	if(Estrela==comp1 || Estrela==comp2){
+	EstrelasCertas++;
+	return EstrelasCertas;
+	}else{
+	return EstrelasCertas;
+	}
+}
+
+
+//Fim Subprogramas da Lotaria______________________________________________________________________________________________________________________________________________________
+
+
+void LotariaJogo(){
+
+//Inicio da Lotaria.............................................................................
+
+
+	//Variaveis lotaria..................................................................
+
+
+	int num1, num2, num3, num4, num5; //pertence ao menu jogo, pedir numeros aleatorios
+	int pin, pinlogin, tentativas=3; // pertece a zona de login, tentativas, pin
+	char user[100]; //perte ao user
+	int premioatual=15000000, SaldoAtual=0;  //diz qual é o premio atual e o saldo atual
+	int ContadorVMenu=0, ContadorVPremio=0, ContadorVInf=0, ContadorVJog=0, ContadorVDemo=0;/*esta parte dedica-se a contagem de visitas,
+	                                      de cada separador, para mediante as visitas aparecer ou não o tutorial.*/
+	char HelpOuNao; //relativo ao menu de jogo se quer ajuda ou nao
+	int valormenuInf , opcaomenu=0, valormenuPremio=0, valormenuJogar; //referente aos dados dos menus de cada separador, se querem sair ou ir para o menu
+	int restantes=5, EstRest=2; //pertence a parte do jogo, para o utilizador saber quantos numeros e estrelas faltam
+
+	int tnum1, tnum2, tnum3, tnum4, tnum5;
+	int test1, test2, NumerosCertos=0, EstrelasCertas=0, Ale1, Ale2, Ale3, Ale4, AleEst1, Ale5, AleEst2; //Ale1=Aleatorio; AleEst= AleatorioEstrela;
+
+
+
+	//Variaveis lotaria..................................................................
+
+		menu:
+		ContadorVMenu++;
+		system("cls");
+		if(ContadorVMenu<=1){
+	printf("\n\n\tNota: Os separadores do menu estao como notas de tutorial,\n\t      como esta ou seja se for a primeira vez que entrar\n\t      em algum separar a nota vai aparecer automaticamente,\n\t      senao for vai ser redirecionado automaticamente\n\t      para a opcao desejada.\n\t      Bom jogo e boas apostas :D\n\n\n\t");
+		system("pause");}
+		system("cls");
+		cabeceira();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|  Bem-Vindo ao Menu da Lotaria!!!!  |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t| Escolha uma opcao:                 |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t| 1 - Jogar                          |\n");
+		printf("|\t| 2 - Premio e Saldo Atual           |\n");
+		printf("|\t| 3 - Ajuda e Informacoes            |\n");
+		printf("|\t| 4 - Sair                           |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t|                 ClaudioF & GoncaloS|\n");
+		linha(38);
+		tapete();
+		printf("\n\tOpcao: ");
+		scanf(" %d", &opcaomenu);
+
+		switch(opcaomenu){
+				case 1:goto jogar; break;
+				case 2:goto premio; break;
+				case 3:goto ajuda; break;
+				case 4: goto sair; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto menu; break;
+		}
+
+	system("pause");
+	return 0;
+
+
+
+	jogar:
+	ContadorVJog++;
+	system("cls");
+	if(ContadorVJog<=1){
+	printf("\n\n\tNota: Neste menu o utilizador tem a opcao de jogar, que lhe permite\n\t      jogar o jogo do euromilhoes ou a versao demonstracao que e um\n\t      exemplo interativo de como se joga o respetivo jogo.\n\t      Bom jogo e boas apostas :D\n\n\n\t");
+	system("pause");}
+		system("cls");
+		cabeceira();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|      Bem-Vindo ao menu jogar !!!   |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|	Para:Jogar(1)                |\n");
+		printf("|\t|            Demonstracao(2)         |\n");
+		printf("|\t|            Menu(3)                 |\n");
+		printf("|\t|            Sair(4)                 |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		tapete();
+		printf("\n\tOpcao: ");
+		scanf(" %d", &valormenuJogar);
+			switch(valormenuJogar){
+				case 1:goto jogo; break;
+				case 2:goto demonstracao; break;
+				case 3:goto menu; break;
+				case 4:goto sair; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto premio; break;
+			}
+	system("pause");
+	return 0;
+
+
+	jogo:
+		system("cls");
+
+		Ale1=pedenumAleat(Ale1, Ale2 , Ale3, Ale4, Ale5);
+		Ale2=pedenumAleat(Ale1, Ale2 , Ale3, Ale4, Ale5);
+		Ale3=pedenumAleat(Ale1, Ale2 , Ale3, Ale4, Ale5);
+		Ale4=pedenumAleat(Ale1, Ale2 , Ale3, Ale4, Ale5);
+		Ale5=pedenumAleat(Ale1, Ale2 , Ale3, Ale4, Ale5);
+		AleEst1=pedeestAleat(AleEst1, AleEst2);
+		AleEst2=pedeestAleat(AleEst1, AleEst2);
+
+		linhaLotaria(25);
+		printf("\n\t| Jogo com Ajuda? (Y/N) |\n");
+		linhaLotaria(25);
+		printf("\n\tOpcao: ");
+		scanf(" %c", &HelpOuNao);
+		switch(HelpOuNao){
+			case 'n':
+			case 'N': system("cls"); goto jogosemajuda; break;
+			case 'y':
+			case 'Y': system("cls"); linhaLotaria(58); printf("\n\t| Nota: O jogo com ajuda serve apenas para mostrar ao    |\n\t|\tutilizador de forma grafica como o jogo funciona |\n\t|\tdeste modo o utilizador se ganhar algum premio   |\n\t|\tnao ficara' com o montante ficticio ganho        |\n\t|\tBom Jogo e Obrigado \1\t\t\t\t |\n"); linhaLotaria(58); printf("\n\t"); system("pause"); system("cls"); break;
+			default: printf("\n\tNao introduzi-o nenhuma das opcao, tente novamente\n\t"); system("pause"); goto jogo; break;
+		}
+		linhaLotaria(38); linhaLotaria(29);
+		printf("\n\t|                                    |");    printf("\t|Nota: Os numeros estao com |");
+		printf("\n\t| Os numeros aleatorios sao:         |");    printf("\t|     2 casas decimais para |");
+		printf("\n\t|                                    |");  printf("\t|   nao alterar a formatacao|\n");
+		linhaLotaria(38);linhaLotaria(29);
+		printf("\n\t|                                    |\n");
+		printf("\t|    1 Numero - %.2d                   |\n", Ale1);
+		printf("\t|    2 Numero - %.2d                   |\n", Ale2);
+		printf("\t|    3 Numero - %.2d                   |\n", Ale3);
+		printf("\t|    4 Numero - %.2d                   |\n", Ale4);
+		printf("\t|    5 Numero - %.2d                   |\n", Ale5);
+		printf("\t|                                    |\n");
+		linhaLotaria(38);
+
+		printf("\n\t|                                    |");
+		printf("\n\t| As estrelas aleatorias sao:        |");
+		printf("\n\t|                                    |\n");
+		linhaLotaria(38);
+		printf("\n\t|                                    |\n");
+		printf("\t|    1 Estrela - %.2d                  |\n", AleEst1);  //esta com duas casas decimais
+		printf("\t|    2 Estrela - %.2d                  |\n", AleEst2); //para mediante o valor nao alterar espaçamento
+		printf("\t|                                    |\n");
+		linhaLotaria(38);
+		printf("\n\n\t"); system("pause"); system("cls");
+
+		jogosemajuda:
+		tnum1=0, tnum2=0, tnum3=0, tnum4=0, tnum5=0, test1=0, test2=0; //para que os numeros nao sejam sempre os mesmos qd sao verificados
+		linhaLotaria(27);
+		printf("\n\t| Numeros Restantantes: %d |\n", restantes);
+		linhaLotaria(27);
+		tnum1=pedenumero(tnum1, tnum2, tnum3, tnum4, tnum5);
+		system("cls");
+		restantes--;
+		linhaLotaria(27);
+		printf("\n\t| Numeros Restantantes: %d |\n", restantes);
+		linhaLotaria(27);
+		tnum2=pedenumero(tnum1, tnum2, tnum3, tnum4, tnum5);
+		system("cls");
+		restantes--;
+		linhaLotaria(27);
+		printf("\n\t| Numeros Restantantes: %d |\n", restantes);
+		linhaLotaria(27);
+		tnum3=pedenumero(tnum1, tnum2, tnum3, tnum4, tnum5);
+		system("cls");
+		restantes--;
+		linhaLotaria(27);
+		printf("\n\t| Numeros Restantantes: %d |\n", restantes);
+		linhaLotaria(27);
+		tnum4=pedenumero(tnum1, tnum2, tnum3, tnum4, tnum5);
+		system("cls");
+		restantes--;
+		linhaLotaria(27);
+		printf("\n\t| Numeros Restantantes: %d |\n", restantes);
+		linhaLotaria(27);
+		tnum5=pedenumero(tnum1, tnum2, tnum3, tnum4, tnum5);
+
+		system("cls");
+		linhaLotaria(28);
+		printf("\n\t| Estrelas Restantantes: %d |\n", EstRest);
+		linhaLotaria(28);
+		test1=pedeestrela(test1, test2);
+		system("cls");
+		EstRest--;
+		linhaLotaria(28);
+		printf("\n\t| Estrelas Restantantes: %d |\n", EstRest);
+		linhaLotaria(28);
+		test2=pedeestrela(test1, test2);
+
+		restantes=5;
+		EstRest=2;
+
+		//parte para testar numeros
+		FuncaoTesteDeNumeros(tnum1, Ale1, Ale2, Ale3, Ale4, Ale5);
+		if(FuncaoTesteDeNumeros()==1){
+			NumerosCertos++;
+		}else{}
+		FuncaoTesteDeNumeros(tnum2, Ale1, Ale2, Ale3, Ale4, Ale5);
+		if(FuncaoTesteDeNumeros()==1){
+			NumerosCertos++;
+		}else{}
+		FuncaoTesteDeNumeros(tnum3, Ale1, Ale2, Ale3, Ale4, Ale5);
+		if(FuncaoTesteDeNumeros()==1){
+			NumerosCertos++;
+		}else{}
+		FuncaoTesteDeNumeros(tnum4, Ale1, Ale2, Ale3, Ale4, Ale5);
+		if(FuncaoTesteDeNumeros()==1){
+			NumerosCertos++;
+		}else{}
+		FuncaoTesteDeNumeros(tnum5, Ale1, Ale2, Ale3, Ale4, Ale5);
+		if(FuncaoTesteDeNumeros()==1){
+			NumerosCertos++;
+		}else{}
+		FuncaoTesteDeEstrelas(test1, AleEst1, AleEst2);
+		if(FuncaoTesteDeEstrelas()==1){
+			EstrelasCertas++;
+		}else{}
+		FuncaoTesteDeEstrelas(test2, AleEst1, AleEst2);
+		if(FuncaoTesteDeEstrelas()==1){
+			EstrelasCertas++;
+		}else{}
+
+
+		if(NumerosCertos==5){
+			printf("\n\tAcertou 5 numeros\n\t");
+		}else if(NumerosCertos==4){
+			printf("\n\tAcertou 4 numeros\n\t");
+		}else if(NumerosCertos==3){
+			printf("\n\tAcertou 3 numeros\n\t");
+		}else if(NumerosCertos==2){
+			printf("\n\tAcertou 2 numeros\n\t");
+		}else if(NumerosCertos==1){
+			printf("\n\tAcertou 1 numeros\n\t");
+		}else if(NumerosCertos==0){
+			printf("\n\tAcertou 0 numeros\n\t");
+		}
+
+		if(EstrelasCertas==2){
+			printf("\n\tAcertou 2 estrelas\n\t");
+		}else if(EstrelasCertas==1){
+			printf("\n\tAcertou 1 estrelas\n\t");
+		}else if(EstrelasCertas==0){
+			printf("\n\tAcertou 0 estrelas\n\t");
+		}
+
+		VerificadorDePremios(NumerosCertos, EstrelasCertas);
+		loading();
+		switch(VerificadorDePremios()){
+
+			case 1:
+			system("cls");
+			linhaLotaria(49);
+			printf("\n\t|\t\t\t\t\t\t|\n\t| Parabens e o grande vencedor da lotaria!!! \1  |\n\t|     Primeiro Premio de 15.000.000 de Euros    |\n\t|\t\t\t\t\t\t|\n"); linhaLotaria(49); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+15000000;}else{}; char linha[50]; FILE * arquivo; arquivo = fopen("RecordLotaria.txt", "a+"); printf("\n\n\tIntroduza o seu nome: ");scanf("%s", &linha);fprintf(arquivo, "\t1 Lugar - %s\n", linha);fclose(arquivo);break;
+			case 2:	system("cls"); linhaLotaria(52); printf("\n\t|\t\t\t\t\t\t   |\n\t| Parabens ganhou o segundo premio da lotaria!!! \1 |\n\t|         Segundo Premio de 310.751 Euros\t   |\n\t|\t\t\t\t\t\t   |\n"); linhaLotaria(52); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+310751;}else{}; char linha2[50]; FILE * arquivo2; arquivo2 = fopen("RecordLotaria.txt", "a+"); printf("\n\n\tIntroduza o seu nome: ");scanf("%s", &linha2);fprintf(arquivo2, "\t2 Lugar - %s\n", linha2);fclose(arquivo2);break;;break;
+			case 3:	system("cls"); linhaLotaria(53); printf("\n\t|\t\t\t\t\t\t    |\n\t| Parabens ganhou o terceiro premio da lotaria!!! \1 |\n\t|         Terceiro Premio de 51.792 Euros\t    |\n\t|\t\t\t\t\t\t    |\n"); linhaLotaria(53); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+51792;}else{}; char linha3[50]; FILE * arquivo3; arquivo3 = fopen("RecordLotaria.txt", "a+"); printf("\n\n\tIntroduza o seu nome: ");scanf("%s", &linha3);fprintf(arquivo3, "\t3 Lugar - %s\n", linha3);fclose(arquivo3); break;
+			case 4:	system("cls"); linhaLotaria(51); printf("\n\t|\t\t\t\t\t\t  |\n\t| Parabens ganhou o quarto premio da lotaria!!! \1 |\n\t|         Quarto Premio de 4.143 Euros\t\t  |\n\t|\t\t\t\t\t\t  |\n"); linhaLotaria(51); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+4143;}else{}; break;
+			case 5:	system("cls"); linhaLotaria(51); printf("\n\t|\t\t\t\t\t\t  |\n\t| Parabens ganhou o quinto premio da lotaria!!! \1 |\n\t|         Quinto Premio de 201 Euros\t\t  |\n\t|\t\t\t\t\t\t  |\n"); linhaLotaria(51); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+201;}else{};break;
+			case 6:	system("cls"); linhaLotaria(51); printf("\n\t|\t\t\t\t\t\t  |\n\t|  Parabens ganhou o sexto premio da lotaria!!! \1 |\n\t|         Sexto Premio de 101 Euros\t\t  |\n\t|\t\t\t\t\t\t  |\n"); linhaLotaria(51); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+101;}else{} ;break;
+			case 7:	system("cls"); linhaLotaria(51); printf("\n\t|\t\t\t\t\t\t  |\n\t| Parabens ganhou o setimo premio da lotaria!!! \1 |\n\t|         Setimo Premio de 59 Euros\t\t  |\n\t|\t\t\t\t\t\t  |\n"); linhaLotaria(51); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+59;}else{} ;break;
+			case 8:	system("cls"); linhaLotaria(51); printf("\n\t|\t\t\t\t\t\t  |\n\t| Parabens ganhou o oitavo premio da lotaria!!! \1 |\n\t|         Oitavo Premio de 19 Euros\t\t  |\n\t|\t\t\t\t\t\t  |\n"); linhaLotaria(51); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+19;}else{} ;break;
+			case 9: system("cls"); linhaLotaria(51); printf("\n\t|\t\t\t\t\t\t  |\n\t|  Parabens ganhou o nono premio da lotaria!!! \1  |\n\t|         Nono Premio de 14 Euros\t\t  |\n\t|\t\t\t\t\t\t  |\n"); linhaLotaria(51); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+14;}else{} ;break;
+			case 10: system("cls"); linhaLotaria(51); printf("\n\t|\t\t\t\t\t\t  |\n\t| Parabens ganhou o decimo premio da lotaria!!! \1 |\n\t|         Decimo Premio de 12 Euros\t\t  |\n\t|\t\t\t\t\t\t  |\n"); linhaLotaria(51); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+12;}else{} ;break;
+			case 11: system("cls"); linhaLotaria(53); printf("\n\t|\t\t\t\t\t\t    |\n\t| Parabens ganhou o Decimo primeiro da lotaria!!! \1 |\n\t|         Decimo Primeiro Premio de 10 Euros\t    |\n\t|\t\t\t\t\t\t    |\n"); linhaLotaria(53); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+10;}else{} ;break;
+			case 12: system("cls"); linhaLotaria(59); printf("\n\t|\t\t\t\t\t\t\t  |\n\t| Parabens ganhou o decimo segundo premio da lotaria!!! \1 |\n\t|            Decimo Segundo Premio de 8 Euros\t\t  |\n\t|\t\t\t\t\t\t\t  |\n"); linhaLotaria(59); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+8;}else{} ;break;
+			case 13: system("cls"); linhaLotaria(60); printf("\n\t|\t\t\t\t\t\t\t   |\n\t| Parabens ganhou o decimo terceiro premio da lotaria!!! \1 |\n\t|            Decimo Terceiro Premio de 4 Euros\t\t   |\n\t|\t\t\t\t\t\t\t   |\n"); linhaLotaria(60); if(HelpOuNao=='n' || HelpOuNao=='N'){SaldoAtual=SaldoAtual+4;}else{} ;break;
+			case 14: system("cls"); linhaLotaria(41); printf("\n\t|\t\t\t\t\t|\n\t| Infelizmente nao ganhou nenhum premio |");
+			printf("\n\t| boa sorte para a proxima, Obrigado \1  |\n\t|\t\t\t\t\t|\n"); linhaLotaria(41); ;break;
+			/*este case(14) faz de default, visto que tenho um else na função a "separar" tudo o que não for da condição*/
+		}
+
+		NumerosCertos=0;
+		EstrelasCertas=0;
+		printf("\n\t");
+		system("pause");
+		goto menu;
+
+
+
+	demonstracao:
+		ContadorVDemo++;
+		system("cls");
+		if(ContadorVDemo<=1){
+		printf("\n\n\tNota: Neste menu o utilizador nao vai introduzir\n\t      nada so se limita a ver o que e mostrado no\n\t      ecra que e um exemplo interativo.\n\t      Bom jogo e boas apostas :D\n\n\n\t");
+		system("pause");}
+		system("cls");
+		teste:
+		linhaLotaria(40);
+		printf("\n\t|                                      |\n");
+		printf("\t|          Demonstracao !!!            |\n");
+		printf("\t|                                      |\n");
+		linhaLotaria(40);
+		printf("\n\t| Numeros Restantantes: 5\t       |");
+		printf("\n\t| Introduza um numero:                 |\n");
+		linhaLotaria(40);
+		printf("\n\t|                                      |\n");
+		printf("\t| Nesta fase o utilizador introduz     |\n");
+		printf("\t| 5 numeros, esses mesmos numeros  que |\n");
+		printf("\t| vao ser registados, para ver se esta |\n");
+		printf("\t| habilitado a ganhar o grande premio. |\n");
+		printf("\t|                                      |\n");
+		linhaLotaria(40);
+		printf("\n\tContinuar a Ler: \n\t");
+		system("pause");
+
+		system("cls");
+		linhaLotaria(40);
+		printf("\n\t| Estrelas Restantantes: 2\t       |");
+		printf("\n\t| Introduza uma estrela:               |\n");
+		linhaLotaria(40);
+		printf("\n\t|                                      |\n");
+		printf("\t| Nesta fase o utilizador introduz     |\n");
+		printf("\t| 2 estrelas, essas mesmas, que junto  |\n");
+		printf("\t| com os numeros antes inseridos vao   |\n");
+		printf("\t| ser todos verificados, para ver se   |\n");
+		printf("\t| no final o utilizador ganha algo     |\n");
+		printf("\t| Se acertar na combinacao claro! \1    |\n");
+		printf("\t|                                      |\n");
+		linhaLotaria(40);
+		printf("\n\tContinuar a Ler: \n\t");
+		system("pause");
+		TentarNovamente:
+		system("cls");
+		linhaLotaria(49);
+		printf("\n\t|\t\t\t\t\t\t|\n\t| Parabens e o grande vencedor da lotaria!!! \1  |\n\t|     Primeiro Premio de 15.000.000 de Euros    |\n\t|\t\t\t\t\t\t|\n");
+		linhaLotaria(49);
+		printf("\n\t|                                      |\n");
+		printf("\t| Nesta fase o utilizador pode ver se  |\n");
+		printf("\t| ganhou algum premio, caso tenha ganho|\n");
+		printf("\t| e esteja no modo sem ajuda pode ver  |\n");
+		printf("\t| que o montante que ganhou esta em:   |\n");
+		printf("\t| SaldoAtual --> (MENU\\SaldoAtual)     |\n");
+		printf("\t| Boa sorte e boas apostas! \1          |\n");
+		printf("\t|                                      |\n");
+		linhaLotaria(40);
+	printf("\n\t|                                      |");
+	printf("\n\t|	Para:(1)Voltar ao inicio       |\n");
+	printf("\t|            (2)Menu                   |\n");
+	printf("\t|            (3)Sair                   |");
+	printf("\n\t|                                      |\n");
+		linhaLotaria(40);
+		printf("\n\tOpcao: ");
+		scanf(" %d", &valormenuInf);
+			switch(valormenuInf){
+				case 1:goto demonstracao; break;
+				case 2:goto menu; break;
+				case 3:goto sair; break;
+				default:printf("\tA opcao escolhida esta incorreta, tente novamente!\n\t"); system("pause");
+				goto TentarNovamente; break;
+			}
+	system("pause");
+	return 0;
+
+
+
+
+
+
+
+
+
+	ajuda:
+	ContadorVInf++;
+	system("cls");
+	if(ContadorVInf<=1){
+	printf("\n\n\tNota: Este menu serve para dar a conhecer ao utilizador\n\t      informacoes sobre o jogo , ajuda caso necessite e\n\t      os premios que esta habilitado a ganhar, estando\n\t      os valor dos mesmos.\n\t      Bom jogo e boas apostas :D\n\n\n\t");
+	system("pause");}
+	inicioinf:
+	system("cls");
+	linhaLotaria(65);
+	printf("\n\t|	               Ajuda/Informacoes!!!                     |\n");
+	linhaLotaria(65);
+	printf("\n\t|                                                               |");
+	printf("\n\t|Bem-vindo caro jogador,                                        |");
+	printf("\n\t|                                                               |");
+	printf("\n\t| -Para Jogar IR --> (MENU\\JOGAR\\JOGAR)                         |");
+	printf("\n\t|                                                               |");
+	printf("\n\t|  1 - Selecionar 5 numeros que podem                           |\n\t|      ser de 1 a 50 na tabela principal                        |");
+	printf("\n\t|                                                               |");
+	printf("\n\t|  2 - Seguidamente selecionar 2 estrelas                       |\n\t|      na tabela das estrelas que podem ser valores de 1 a 11   |");
+	printf("\n\t|                                                               |");
+	printf("\n\t|  3 - Esperar que gere a chave ordenada e obtenha o resultado  |");
+	printf("\n\t|                                                               |");
+	printf("\n\t|                                                               |\n       ");
+	linhaLotaria(65);
+	printf("\n\t|  Para continuar a ler:                                        |\n\t   ");
+	system("pause");
+	system("cls");
+	linhaLotaria(65);
+	printf("\n\t|                                                               |");
+	printf("\n\t|                            Premios                            |\n");
+	printf("\t|                                                               |\n");
+	linhaLotaria(65);
+	printf("\n\t|                                                               |");
+	printf("\n\t|    Premio    |    Numeros    |    Estrelas    |     Valor     |");
+	printf("\n\t|                                                               |\n");
+	linhaLotaria(65);
+	printf("\n\t|    1Lugar    |      5        |       2        | 15.000.000 EU |\n");
+	printf("\t|    2Lugar    |      5        |       1        |    310.751 EU |\n");
+	printf("\t|    3Lugar    |      5        |       0        |     51.792 EU |\n");
+	printf("\t|    4Lugar    |      4        |       2        |      4.143 EU |\n");
+	printf("\t|    5Lugar    |      4        |       1        |        201 EU |\n");
+	printf("\t|    6Lugar    |      4        |       0        |        101 EU |\n");
+	printf("\t|    7Lugar    |      3        |       2        |         59 EU |\n");
+	printf("\t|    8Lugar    |      2        |       2        |         19 EU |\n");
+	printf("\t|    9Lugar    |      3        |       1        |         14 EU |\n");
+	printf("\t|   10Lugar    |      3        |       0        |         12 EU |\n");
+	printf("\t|   11Lugar    |      1        |       2        |         10 EU |\n");
+	printf("\t|   12Lugar    |      2        |       1        |          8 EU |\n");
+	printf("\t|   13Lugar    |      2        |       0        |          4 EU |\n");
+	linhaLotaria(65);
+	printf("\n\t|                                                               |");
+	printf("\n\t|	Para:(1)Voltar ao inicio                                |\n");
+	printf("\t|            (2)Menu                                            |\n");
+	printf("\t|            (3)Sair                                            |");
+	printf("\n\t|                                                               |\n");
+		linhaLotaria(65);
+		printf("\n\tOpcao: ");
+		scanf(" %d", &valormenuInf);
+			switch(valormenuInf){
+				case 1:goto inicioinf; break;
+				case 2:goto menu; break;
+				case 3:goto sair; break;
+				default:printf("\tA opcao escolhida esta incorreta, tente novamente!\n\t"); system("pause");
+				goto ajuda; break;
+			}
+	system("pause");
+	return 0;
+
+
+
+
+
+
+
+
+	premio:
+	ContadorVPremio++;
+	system("cls");
+	if(ContadorVPremio<=1){
+	printf("\n\n\tNota: Este menu serve para mostrar o premio atual\n\t      que esta habilitado a ganhar,lembramos\n\t      que o premio muda todas as semanas! \n\t      Bom jogo e boas apostas :D\n\n");
+	system("pause");}
+	system("cls");
+		linhaLotaria(45);
+		printf("\n\t|                                           |\n");
+		printf("\t| Esta semana o Premio e %d euros !!! |\n", premioatual);
+		printf("\t|                                           |\n");
+		printf("\t| Seu Saldo atual e: %.8d euros         |\n", SaldoAtual);
+		printf("\t|                                           |\n");
+		printf("\t|	Para:Menu(1)                        |\n");
+		printf("\t|            Sair(2)                        |\n");
+		linhaLotaria(45);
+		printf("\n\tOpcao: ");
+		scanf(" %d", &valormenuPremio);
+			switch(valormenuPremio){
+				case 1:goto menu; break;
+				case 2:goto sair; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto premio; break;
+			}
+	system("pause");
+	return 0;
+
+
+	sair:
+	system("cls");
+	printf("\n\tObrigado, volte sempre!!!\1\n\n\t");
+	system("pause");
+
+//Fim da Lotaria.............................................................................
+
+}
+
+int main()
+{
+
+    system("color 0a");
+	//Main....................................................................................................................................................................................
+
+	srand(time(NULL));
+
+        menu:
+		system("cls");
+		int TentativasJogadasNaval=0;
+		system("title Projeto Pratico - ClaudioC e GoncaloS");
+		char EscolhaM; //escolha menu
+		puts("");
+		cabeceira();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|  Bem-Vindo ao Salao de Jogos v.10  |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		MenuCoins();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t| Escolha a opcao pretendida:        |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t| J - Jogos                          |\n");
+		printf("|\t| A - Ajuda e Coins                  |\n");
+		printf("|\t| S - Sair                           |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t|                 ClaudioF & GoncaloS|\n");
+		linha(38);
+		tapete();
+
+
+		puts("");
+
+		printf("\n\n\tOpcao: ");
+		EscolhaM=0;
+		scanf(" %c", &EscolhaM);
+
+		switch(EscolhaM){
+				case 'j':
+				case 'J':goto MenuJogos; break;
+				case 'A':
+				case 'a':goto MenuAjuda; break;
+				case 'S':
+				case 's':goto sair; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto menu; break;
+		}
+
+	MenuJogos:
+		system("cls");
+
+		cabeceira();
+		linha(38);
+		MenuCoins();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|   Bem-Vindo ao Menu dos Jogos!!!   |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|	Para:Jogos(1)                |\n");
+		printf("|\t|            Records(2)              |\n");
+		printf("|\t|            Menu(3)                 |\n");
+		printf("|\t|            Sair(4)                 |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		tapete();
+
+
+
+
+		printf("\n\n\tOpcao: ");
+		MenuGlobal=0;
+		scanf(" %d", &MenuGlobal);
+			switch(MenuGlobal){
+				case 1:goto jogos; break;
+				case 2:goto records; break;
+				case 3:goto menu; break;
+				case 4:goto sair; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto MenuJogos; break;
+		}
+
+
+
+	MenuAjuda:
+
+	system("cls");
+
+		cabeceira();
+		linha(38);
+		MenuCoins();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|       Bem-Vindo ao Menu Ajuda!!!   |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|	Para:Comprar(1)              |\n");
+		printf("|\t|            Saldo(2)                |\n");
+		printf("|\t|            Menu(3)                 |\n");
+		printf("|\t|            Sair(4)                 |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		tapete();
+
+
+		printf("\n\tOpcao: ");
+		MenuGlobal=0;
+		scanf(" %d", &MenuGlobal);
+			switch(MenuGlobal){
+				case 1:goto comprar; break;
+				case 2:system("cls"); cabeceira();
+
+
+			linha(38);
+			printf("\n|\t|                                    |");
+			MenuCoins();
+			printf("|\t|                                    |\n");
+			linha(38);
+			printf("\n|\t|                                    |\n");
+			printf("|\t|                           /\\       |\n");
+			printf("|\t|  Bem Vindo                ||       |\n");
+			printf("|\t|        o Montante         ||       |\n");
+			printf("|\t|              de Coins e'  ||       |\n");
+			printf("|\t|                           ||       |\n");
+			printf("|\t|                                    |\n");
+			linha(38);
+
+				tapete(); printf("\n\n\n\t\t"); system("pause"); goto MenuAjuda; break;
+				case 3:goto menu; break;
+				case 4:goto sair; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto MenuAjuda; break;
+		}
+
+
+	jogos:
+
+        system("cls");
+        cabeceira();
+		linha(38);
+		MenuCoins();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|    Escolha um Jogo, Boa Sorte!!!   |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|	Para:(1)Lotaria -> 1C        |\n");
+		printf("|\t|            (2)Jogo do Galo -> 2C   |\n");
+		printf("|\t|            (3)Batalha Naval -> 3C  |\n");
+		printf("|\t|            (4)Menu                 |\n");
+		printf("|\t|            (5)Sair                 |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t|                                    |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		tapete();
+
+        printf("\n\tOpcao: ");
+		MenuGlobal=0;
+		scanf(" %d", &MenuGlobal);
+			switch(MenuGlobal){
+				case 1:goto Lotaria; break;
+				case 2:goto Galo; break;
+				case 3:goto Naval; break;
+				case 4:goto MenuJogos; break;
+				case 5:goto sair; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto jogos; break;
+		}
+
+
+
+    Lotaria:
+	if(coins!=0){
+		coins=coins-1;
+		LotariaJogo();
+		goto jogos;
+	}else{
+		printf("\n\tDesculpe mas nao tem coins suficientes para jogar este jogo \2\n\n\t");
+		system("pause");
+		goto jogos;
+	}
+
+
+    Galo:
+    if(coins!=0){
+		coins=coins-2;
+		GaloJogo();
+		goto jogos;
+	}else{
+		printf("\n\tDesculpe mas nao tem coins suficientes para jogar este jogo \2\n\n\t");
+		system("pause");
+		goto jogos;
+	}
+
+    Naval:
+    if(coins!=0){
+		coins=coins-3;
+		TentativasJogadasNaval=NavalJogo(TentativasJogadasNaval);
+		goto jogos;
+	}else{
+		printf("\n\tDesculpe mas nao tem coins suficientes para jogar este jogo \2\n\n\t");
+		system("pause");
+		goto jogos;
+	}
+
+	records:
+		system("cls");
+		cabeceira();
+		linha(38);
+		MenuCoins();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|      Bem-Vindo aos Records!!!      |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|  Para visualizar records de:       |\n");
+		printf("|\t|            (1)Lotaria              |\n");
+		printf("|\t|            (2)Batalha Naval        |\n");
+		printf("|\t|            (3)Menu                 |\n");
+		printf("|\t|            (4)Sair                 |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		tapete();
+
+		printf("\n\tOpcao: ");
+		MenuGlobal=0;
+		scanf(" %d", &MenuGlobal);
+			switch(MenuGlobal){
+				case 1:recordLotaria(); break;
+				case 2:goto recordNaval; break;
+				case 3:goto MenuJogos; break;
+				case 4:goto sair; break;
+				default:printf("\n\n\tA opcao escolhida esta incorreta, tente novamente!\n\n\n\n\t"); system("pause");
+				goto records; break;
+		}
+
+	goto records;
+
+
+
+	comprar:
+
+	system("cls");
+
+		cabeceira();
+		linha(38);
+		MenuCoins();
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|         Compra dos Coins!!!        |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		printf("\n|\t|                                    |\n");
+		printf("|\t|  Introduza                         |\n");
+		printf("|\t|        o Montante                  |\n");
+		printf("|\t|              de Dinheiro           |\n");
+		printf("|\t|                      $$$$$$        |\n");
+		printf("|\t|                         Ps:Max 99  |\n");
+		printf("|\t|                                    |\n");
+		linha(38);
+		tapete();
+
+		printf("\n\n\tMontante: ");
+		scanf("%d", &montante);
+		if(montante>99){
+			printf("\n\tIntroduza um montante entre 0 e 99 coins\n\n\t");
+			system("pause");
+			goto comprar;
+		}else{
+			coins=coins+montante;
+			printf("\n\t");
+			system("pause");
+			goto MenuAjuda;
+		}
+
+
+
+recordNaval:
+system("cls");
+
+
+FILE *pNaval;
+
+   char c;
+
+   pNaval = fopen("RecordeNaval.txt","a+");
+
+
+	if(TentativasJogadasNaval<9){fprintf(pNaval,"O seu ultimo recorde e de recorde e de %d\n",TentativasJogadasNaval);	}
+   fclose(pNaval);
+
+
+   pNaval = fopen("RecordeNaval.txt","r");
+   while( (c=fgetc(pNaval))!= EOF )
+		putchar(c);
+   fclose(pNaval);
+
+   puts("");
+   system("pause");
+goto records;
+
+
+
+
+	sair:
+	system("cls");
+	printf("Obrigado por ter visitado o nosso salao, \nvolte sempre, temos imensas novidades para si! \1\n\n\n");
+    system("pause");
+    return 0;
+
+
+}
